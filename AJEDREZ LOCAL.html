@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    background-image: url("https://quo.eldiario.es/wp-content/uploads/2022/02/King-Queen-Chess-Pieces-777x583-1-950x713.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  #tablero{
+    margin-right: 20px;
+  }
+
+  table {
+    margin: auto;
+    border: outset rgb(216, 123, 69);
+    background: rgb(209, 140, 75);
+    cursor: crosshair;
+  }
+
+  td {
+    line-height: 0;
+    width: 100px;
+    height: 100px;
+    background: rgb(54, 28, 2);
+    text-align: center;
+    vertical-align: middle;
+    -webkit-touch-callout: none;
+  }
+
+  tr:nth-child(odd) td:nth-child(odd),
+  tr:nth-child(even) td:nth-child(even) {
+    background: rgb(160, 101, 64);
+  }
+
+  .blancas,
+  .negras {
+    display: inline-block;
+    font: 800 60px/1 "ms mincho", "dejavu sans", "dejavu sans condensed", "dejavu sans mono", quivira, "arial unicode ms", code2000, "droid sans fallback", eversonmono, freeserif, "gnu unifont", "segoe ui symbol", "y.ozfont", "unicode bmp fallback sil", serif;
+    width: 70%;
+    height: 70%;
+    background: white;
+    color: black;
+    border: 4px outset rgb(122, 122, 122);
+    border-radius: 100%;
+    overflow: hidden;
+    cursor: -ms-grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
+  }
+
+  .negras {
+    background: black;
+    color: white;
+    border: 4px outset white;
+  }
+
+  .mano {
+    cursor: -ms-grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+  }
+
+  a {
+    color: rgb(255, 255, 255);
+  }
+
+  #clock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: rgb(95, 68, 10);
+    border-radius: 10px;
+    border: 5px solid rgb(124, 70, 19);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: rgb(119, 56, 13);
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+
+<body>
+
+  <div id="container">
+    <table id="tablero"></table>
+    <div id="clock">
+      <button id="player1" class="button rotate"></button>
+      <div class="menu-bar">
+        <a id="pause" href="#!"><i id="pauseIcon" class="icon material-icons">pause</i></a>
+        <a id="restart" href="#!"> <i class="icon material-icons">restart</i></a>
+        <a id="settings" href="#!"><i class="icon material-icons">settings</i></a>
+      </div>
+      <button id="player2" class="button"></button>
+    </div>
+
+    <div id="settings-menu" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Configuración del Reloj</h2>
+        <label for="min-input">Minutos por jugador:</label>
+        <input type="number" id="min-input" value="5" min="1">
+        <label for="inc-input">Incremento (segundos):</label>
+        <input type="number" id="inc-input" value="0">
+        <button id="apply-settings">Aplicar</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+  <script>
+
+
+
+    //+++++++++++++++++++++++
+    //Definicion de variables
+    var escaques, padre, hijo, moviendo;
+    var trebejos0 = ["♖","♘","♗","♕","♔","♗","♘","♖"];
+    var trebejos1 = "♙";
+    let MIN = 5;
+    let INC = 0;
+    let P1_BUTTON, P2_BUTTON;
+    //Definicion de variables
+    //+++++++++++++++++++++++
+
+
+
+    //+++++++++++++++++++++++++++++++
+    //Funcion de creacion del tablero
+    function tablero() {
+      escaques = document.getElementById("tablero");
+      for(e=0; e<8; e++) {
+        var fila = escaques.insertRow();
+        for(c=0; c<8; c++){
+          var celda = fila.insertCell();
+          if(e==0) celda.innerHTML = "<span class=negras>"+trebejos0[c]+"</span>";
+          else if(e==1) celda.innerHTML = "<span class=negras>"+trebejos1+"</span>";
+          else if(e==6) celda.innerHTML = "<span class=blancas>"+trebejos1+"</span>";
+          else if(e==7) celda.innerHTML = "<span class=blancas>"+trebejos0[c]+"</span>";
+        }
+      }
+      var movible = document.querySelectorAll("td");
+      for(m=0; m<movible.length; m++) {
+        movible[m].addEventListener("click", function() {
+          juega(this);
+        });
+      }
+    }
+    //Funcion de creacion del tablero
+    //+++++++++++++++++++++++++++++++
+
+
+
+    //+++++++++++++++++++++++++++++++++
+    //Funcion juega player 1 y player 2
+    function juega(T) {
+      var elementos = document.querySelectorAll("table, table span");
+
+      if(!moviendo && T.firstElementChild){
+        padre = T;
+        hijo = T.innerHTML;
+
+        for(i=0; i<elementos.length; i++) {
+          elementos[i].classList.add("mano");
+        }
+
+        T.querySelector("span").style.opacity = ".4";
+
+        moviendo = true;
+      } else if(moviendo) {
+        padre.innerHTML = "";
+        T.innerHTML = hijo;
+
+        for(i=0; i<elementos.length; i++) {
+          elementos[i].classList.remove("mano");
+        }
+
+        moviendo = false;
+      }
+    }
+    window.onload = function() {
+      tablero();
+
+      const QUERY_STRINGS = window.location.search;
+      const URL_PARAMS = new URLSearchParams(QUERY_STRINGS);
+      const P1_BUTTON = document.getElementById("player1");
+      const P2_BUTTON = document.getElementById("player2");
+      const TICK = new Audio("tick.ogg");
+
+      let interval;
+      let p1Time = MIN * 60000;
+      let p2Time = MIN * 60000;
+      let paused = false;
+
+      start();
+    //Funcion juega player 1 y player 2
+    //+++++++++++++++++++++++++++++++++
+
+
+
+
+
+    //+++++++++++++++++++++++
+    //Funcion inicio de reloj
+
+      function start() {
+        window.clearInterval(interval);
+        P1_BUTTON.disabled = false;
+        p1Time = MIN * 60000;
+        P1_BUTTON.innerText = msToMin(p1Time);
+        P2_BUTTON.disabled = false;
+        p2Time = MIN * 60000;
+        P2_BUTTON.innerText = msToMin(p2Time);
+        paused = false;
+        document.getElementById("pauseIcon").innerText = "pause";
+      }
+    //Funcion inicio de reloj
+    //+++++++++++++++++++++++
+
+
+    //++++++++++++++++++++++
+    //Funcion player 1 juega
+      function player1Playing() {
+        P1_BUTTON.disabled = true;
+        P2_BUTTON.disabled = false;
+        window.clearInterval(interval);
+        p1Time += INC * 1000;
+        interval = window.setInterval(function() {
+          time(false);
+        }, 10);
+        TICK.play();
+      }
+    //Funcion player 1 juega
+    //++++++++++++++++++++++
+
+
+
+    //++++++++++++++++++++++
+    //Funcion player 2 juega
+      function player2Playing() {
+        P1_BUTTON.disabled = false;
+        P2_BUTTON.disabled = true;
+        p2Time += INC * 1000;
+        window.clearInterval(interval);
+        interval = window.setInterval(function() {
+          time(true);
+        }, 10);
+        TICK.play();
+      }
+    //Funcion player 2 juega
+    //++++++++++++++++++++++
+
+
+
+
+    //+++++++++++++++++++++++
+    //Funcion pausa del reloj
+      function pause() {
+        if (!paused) {
+          window.clearInterval(interval);
+          P1_BUTTON.disabled = true;
+          P2_BUTTON.disabled = true;
+          paused = true;
+          document.getElementById("pauseIcon").innerText = "play_arrow";
+        } else {
+          paused = false;
+          P1_BUTTON.disabled = false;
+          P2_BUTTON.disabled = false;
+          document.getElementById("pauseIcon").innerText = "pause";
+        }
+      }
+    //Funcion pausa del reloj
+    //+++++++++++++++++++++++
+
+
+
+
+    //+++++++++++++++++
+    //Funcion del reloj
+      function msToMin(millis) {
+        let sec = Math.floor(millis / 1000);
+        let hrs = Math.floor(sec / 3600);
+        sec -= hrs * 3600;
+        let min = Math.floor(sec / 60);
+        sec -= min * 60;
+        sec = "" + sec;
+        sec = ("00" + sec).substring(sec.toString().length);
+        if (hrs > 0) {
+          min = "" + min;
+          min = ("00" + min).substring(min.toString().length);
+          return hrs + ":" + min + ":" + sec;
+        } else {
+          return min + ":" + sec;
+        }
+      }
+    //Funcion del reloj
+    //+++++++++++++++++
+   
+
+
+
+    //+++++++++++++++++++++++++++++
+    //Funcion de opciones de tiempo
+      function time(isPlayer1) {
+        if (isPlayer1) {
+          p1Time -= 10;
+          P1_BUTTON.innerText = msToMin(p1Time + 1000);
+          if (p1Time + 1000 <= 0) {
+            document.getElementById("pause").remove();
+            pause();
+            window.clearInterval(interval);
+          }
+        } else {
+          p2Time -= 10;
+          P2_BUTTON.innerText = msToMin(p2Time + 1000);
+          if (p2Time + 1000 <= 0) {
+            document.getElementById("pause").remove();
+            pause();
+            window.clearInterval(interval);
+          }
+        }
+      }
+
+      document.getElementById("restart").onclick = start;
+      document.getElementById("pause").onclick = pause;
+      P1_BUTTON.onclick = player1Playing;
+      P2_BUTTON.onclick = player2Playing;
+    };
+    document.getElementById("settings").onclick = function() {
+      var modal = document.getElementById("settings-menu");
+      modal.style.display = "block";
+    };
+
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+      var modal = document.getElementById("settings-menu");
+      modal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+      var modal = document.getElementById("settings-menu");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+    //Funcion de opciones de tiempo
+    //+++++++++++++++++++++++++++++
+   
+
+
+
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //Aplicacion de cambios realizados en el tiempo del reloj
+  document.getElementById("apply-settings").onclick = function () {
+  const minInput = document.getElementById("min-input");
+  const incInput = document.getElementById("inc-input");
+
+  const newMin = parseInt(minInput.value) || 5;
+  const newInc = parseInt(incInput.value) || 0;
+
+  MIN = newMin;
+  INC = newInc;
+
+  p1Time = MIN * 60000;
+  p2Time = MIN * 60000;
+
+  P1_BUTTON.innerText = msToMin(p1Time);
+  P2_BUTTON.innerText = msToMin(p2Time);
+
+  var modal = document.getElementById("settings-menu");
+  modal.style.display = "none";
+};
+//Aplicacion de cambio realizados en el tiempo del reloj
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  </script>
+
+</html>
