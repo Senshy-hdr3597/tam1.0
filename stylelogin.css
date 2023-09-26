@@ -1,0 +1,44 @@
+body{
+    background-image: url("https://cdn2.tfx.company/images/clickwallpapers-xadrez-chess-img2.jpg");
+	background-position: 0% 400; 
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.container{
+	padding: 50px 20px;
+	background-color: #442f00b7;
+	margin: calc(25% + 100px);
+	margin-top: 70px;
+	padding-top: 28px;
+	margin-bottom: 30px;
+	border-radius: 10px;
+}
+input {
+	width: calc(100% - 20px);
+	padding: 9px;
+	margin: auto;
+	margin-top: 12px;
+	font-size: 16px
+}
+button[type='submit']{
+	background-color: rgb(24, 12, 194);
+	border-radius: 5px;
+	color: #fff;
+	width: calc(80% - 20px);
+    padding: 5px;
+	margin: 0 10%;
+	margin-top: 30px;
+	border: none;
+    cursor: pointer;
+}
+.man:hover {
+    background-color: #9214e6;
+  }
+h1 {
+	text-align: center;
+	padding: 12px;
+	color: #6dbdff
+}
+.reg{
+	color: white;
+}

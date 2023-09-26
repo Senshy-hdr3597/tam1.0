@@ -1,0 +1,40 @@
+body{
+    background-image: url("https://img2.rtve.es/i/?w=1600&i=1689677236017.jpg");
+    background-position: 0px 700px; 
+    background-size: cover;
+}
+.container{
+	padding: 50px 20px;
+	background-color: #ad7600d5;
+	margin: calc(25% + 100px);
+	margin-top: 40px;
+	padding-top: 28px;
+	margin-bottom: 30px;
+	border-radius: 10px;
+}
+input {
+	width: calc(100% - 20px);
+	padding: 9px;
+	margin: auto;
+	margin-top: 12px;
+	font-size: 16px
+}
+button[type='submit']{
+	background-color: #48e;
+	border-radius: 5px;
+	color: #fff;
+	width: calc(80% - 20px);
+    padding: 5px;
+	margin: 0 10%;
+	margin-top: 30px;
+	border: none;
+    cursor: pointer;
+}
+.xd:hover {
+    background-color: #b037e7;
+  }
+h1 {
+	text-align: center;
+	padding: 12px;
+	color: #dbdbdb
+}
