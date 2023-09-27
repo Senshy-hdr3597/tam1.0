@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajedrez Online</title>
+    <form action="login.php" method="POST"></form>
+    <form action="registro.php" method="POST"></form>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(https://images2.alphacoders.com/725/725137.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            color: #fff;
+        }
+
+        /* Encabezado */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .nav-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-menu li {
+            margin-right: 2rem;
+        }
+
+        .nav-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        /* Secciones */
+        .section {
+            background-color: rgba(0, 0, 0, 0.7);
+            margin: 2rem;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        /* Pie de página */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-text {
+            font-size: 1rem;
+        }
+
+        /* Estilos para contenido adicional */
+        .image-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">Ajedrez Online</h1>
+            <ul class="nav-menu">
+                <li><a href="#jugar">Jugar</a></li>
+                <li><a href="#reglas">Reglas</a></li>
+                <li><a href="#aperturas">Aperturas</a></li>
+                <li><a href="#mitad-de-partida">Mitad de Partida</a></li>
+                <li><a href="#finales">Finales</a></li>
+                <li><a href="#noticias">Noticias</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="jugar" class="section">
+        <h2 class="section-title">Bienvenido al Mundo del Ajedrez</h2>
+        <p>Descubre todo sobre el apasionante juego del ajedrez. Aprende las reglas, estrategias y mantente actualizado con las últimas noticias y eventos.</p>
+        <a href="AJEDREZ LOCAL.html">JUGAR</a>
+    </section>
+
+    <section id="reglas" class="section">
+        <h2 class="section-title">Reglas del Ajedrez</h2>
+        <p><strong>Reglas Generales del Ajedrez:</strong></p>
+        <ul>
+            <li>Objetivo del juego: Ganar la partida poniendo al rey del oponente en jaque mate.</li>
+            <li>El tablero: Un tablero cuadriculado de 8x8 con 64 casillas alternando colores claros y oscuros. Las filas se numeran del 1 al 8 y las columnas se etiquetan de "a" a "h".</li>
+            <li>Configuración inicial de las piezas:
+                <ul>
+                    <li>Cada jugador tiene 16 piezas: 1 rey, 1 reina, 2 torres, 2 caballos, 2 alfiles y 8 peones.</li>
+                    <li>Las piezas se colocan en el tablero de la siguiente manera:
+                        <ul>
+                            <li>Las torres en las esquinas.</li>
+                            <li>Los caballos junto a las torres.</li>
+                            <li>Los alfiles junto a los caballos.</li>
+                            <li>La reina en la casilla de su color.</li>
+                            <li>El rey en la casilla restante.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>Enroque: Permite mover el rey dos casillas hacia una de las torres y luego la torre salta sobre el rey. Puedes hacerlo corto (Kingside) o largo (Queenside).</li>
+            <li>Peón al paso: Si un peón se mueve dos casillas desde su posición inicial y termina al lado de un peón oponente, este último puede capturar al peón como si se hubiera movido solo una casilla.</li>
+            <li>Promoción de peones: Cuando un peón alcanza la última fila del tablero del oponente, se promociona a cualquier otra pieza, excepto un rey.</li>
+            <li>Ahogado (Stalemate): Si un jugador no tiene movimientos legales disponibles y su rey no está en jaque, se considera un ahogado y el juego termina en empate.</li>
+            <li>Jaques y jaque mate: Cuando un rey está amenazado por una pieza del oponente, se encuentra en jaque. El jugador debe mover su rey, bloquear el ataque o capturar la pieza que amenaza al rey. Si no hay forma de escapar del jaque, se produce el jaque mate y el juego termina.</li>
+            <li>Regla de los 50 movimientos: Si se realizan 50 movimientos consecutivos sin capturas ni movimientos de peones, el juego se considera un empate.</li>
+            <li>Regla de las tres repeticiones: Si la misma posición se repite tres veces con el mismo jugador en movimiento, el juego puede terminar en empate.</li>
+            <li>Regla del rey ahogado (regla de pat): Si no hay suficientes piezas en el tablero para que ninguno de los jugadores pueda dar jaque mate al rey oponente, el juego se considera un empate.</li>
+        </ul>
+    </section>
+
+    <section id="aperturas" class="section">
+        <h2 class="section-title">Aperturas</h2>
+        <p><strong>Aperturas:</strong></p>
+        <p>Las aperturas en el ajedrez son los movimientos iniciales que los jugadores realizan en sus partidas. Existen una multitud de aperturas diferentes, cada una con sus propias ideas y objetivos. Algunas aperturas conocidas son:</p>
+        <ul>
+            <li>Apertura Española (Ruy López): 1.e4 e5 2.Nf3 Nc6 3.Bb5. La Apertura Española busca controlar el centro del tablero y desarrollar rápidamente las piezas.</li>
+            <li>Defensa Siciliana: 1.e4 c5. Una apertura agresiva de las negras que busca un juego desequilibrado y luchado.</li>
+            <li>Defensa Francesa: 1.e4 e6 2.d4 d5. Una defensa sólida en la que las negras buscan una estructura de peones compacta.</li>
+            <li>Defensa Caro-Kann: 1.e4 c6 2.d4 d5. Una apertura que busca una sólida estructura de peones y una ubicación segura para el rey negro.</li>
+            <li>Defensa India de Rey: 1.d4 Nf6. Una respuesta sólida y flexible que lleva a un juego más cerrado.</li>
+        </ul>
+    </section>
+
+    <section id="mitad-de-partida" class="section">
+        <h2 class="section-title">Mitad de Partida</h2>
+        <p><strong>Mitades de Partida:</strong></p>
+        <p>La mitad de partida es la fase que sigue a la apertura, donde se desarrollan y coordinan las piezas, y los jugadores buscan obtener ventajas estratégicas. Aspectos clave de esta fase incluyen:</p>
+        <ul>
+            <li>Control del Centro</li>
+            <li>Desarrollo de Piezas</li>
+            <li>Estructura de Peones</li>
+            <li>Ataque y Defensa</li>
+            <li>Planificación a Largo Plazo</li>
+        </ul>
+    </section>
+
+    <section id="finales" class="section">
+        <h2 class="section-title">Finales de Partida</h2>
+        <p><strong>Finales de Partida:</strong></p>
+        <p>La fase final de la partida, donde quedan pocas piezas en el tablero. Algunas categorías de finales de partida son:</p>
+        <ul>
+            <li>Rey y Peón vs. Rey: Un final común en el que un jugador intenta coronar un peón mientras el otro defiende con su rey.</li>
+            <li>Rey y Torre vs. Rey y Peón: Un final en el que el jugador con la torre busca dar jaque mate al rey oponente.</li>
+        </ul>
+    </section>
+
+    <section id="noticias" class="section">
+        <h2 class="section-title">Noticias y Eventos</h2>
+        <p>Mantente al día con las últimas noticias, torneos y eventos relacionados con el ajedrez en todo el mundo. Nuestra sección de noticias te ofrece análisis de partidas, entrevistas con maestros de ajedrez y cobertura en tiempo real de los torneos más importantes.</p>
+    </section>
+
+    <section id="contacto" class="section">
+        <h2 class="section-title">Contacto</h2>
+        <p>¿Tienes alguna pregunta o comentario? ¡Contáctanos! Estamos aquí para ayudarte. Puedes encontrarnos en las redes sociales o enviarnos un correo electrónico.</p>
+        <address>
+            Correo Electrónico: <a href="mailto:principe.zorzoni@gmail.com">principe.zorzoni@gmail.com</a><br>
+            Teléfono: [Tu número de teléfono]
+        </address>
+    </section>
+
+    <footer class="footer">
+        <p class="footer-text">Derechos de autor © 2023 Ajedrez Online</p>
+    </footer>
+</body>
+
+</html>
